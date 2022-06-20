@@ -10,16 +10,10 @@ namespace Home_task_4
         {
             while (true)
             {
-                Console.WriteLine("Melumatlari daxil edin:");
+                Console.WriteLine("Enter your informations");
                 userInformation userInformation = new userInformation();
-
-
-
             }
-
         }
-
-
     }
 
     public class userInformation
@@ -35,18 +29,15 @@ namespace Home_task_4
 
         public userInformation()
         {
-
-
             _name = GetValidNameValue("Name", GetCommand("Name"));
             _surname = GetValidNameValue("Surname", GetCommand("Surname"));
             _fatherName = GetValidNameValue("Father name", GetCommand("Father name"));
             _age = GetValidAgeValue("Age", GetCommand("Age"));
-            _idCardFin = GetValidNameValue("Id card", GetCommand("Id card"));
+            _idCardFin = GetValidIdValue("Id card", GetCommand("Id card"));
             _phoneNumber = GetValidNameValue("Phone number", GetCommand("Phone number"));
             _position = GetValidNameValue("Position", GetCommand("Position"));
             _salary = GetValidNameValue("Salary", GetCommand("Salary"));
         }
-
         string GetCommand(string text)
         {
             Console.Write($"{text}: ");
@@ -70,6 +61,14 @@ namespace Home_task_4
                 value = GetCommand(propertyAge);
             }
 
+            return value;
+        }
+        string GetValidIdValue(string propetryIdCard, string value)
+        {
+            while(!IdCardRange(value)|| !IdCardLetters(value))
+            {
+                value= GetCommand(propetryIdCard);
+            }
             return value;
         }
 
@@ -136,11 +135,42 @@ namespace Home_task_4
                 {
                     return true;
                 }
-
             }
 
             Console.WriteLine("Entered age false");
             return false;
         }
+        bool IdCardRange(string targetId)
+        {
+            if(targetId.Length<7 || targetId.Length > 7)
+            {
+                Console.WriteLine("Entered id Card false range");
+                return false;
+            }return true;
+        }
+        bool IdCardLetters(string targetLetters)
+        {
+            char[] lowerLetters = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+                                       'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+            for (int i = 0; i < targetLetters.Length; i++)
+            {
+                bool isValidLetter = false;
+                for (int l = 0; l < lowerLetters.Length; l++)
+                {
+                    if(targetLetters[i] != lowerLetters[l])
+                    {
+                        isValidLetter=true;
+                        
+                        break;
+                    }
+                    if (!isValidLetter)
+                    {
+                        Console.WriteLine("Entered format false idCard");
+                        return false;
+                    }
+                }
+            }return true;
+        }
+        
     }
 }
